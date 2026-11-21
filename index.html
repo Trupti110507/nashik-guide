@@ -3,28 +3,71 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Akanksha Padol | Nashik Darshan Tourist Guide</title>
-<meta name="description" content="Book a guided Nashik Darshan tour with Akanksha Padol: temples, ghats, caves and vineyards.">
+<title>Akanksha Padol | Nashik Darshan &amp; Kumbh Mela Tourist Guide</title>
+<meta name="description" content="Book a guided Nashik Darshan or Simhastha Kumbh Mela 2027-28 tour with Akanksha Padol: temples, ghats, caves and vineyards.">
+<meta name="theme-color" content="#7a2e0b">
+<meta property="og:title" content="Akanksha Padol | Nashik Darshan &amp; Kumbh Mela Guide">
+<meta property="og:description" content="Guided temple, ghat and Kumbh Mela tours in Nashik. Pick a plan and book your slot.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@600&family=Playfair+Display:wght@500;600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<header><nav>
-  <b>🪔 Akanksha Padol</b>
-  <div><a href="#about">About</a><a href="#tours">Tours</a><a href="#book">Book</a><a href="#records">Records</a><a href="#feedback">Feedback</a></div>
+<header class="site-header"><nav class="nav" aria-label="Main">
+  <a class="brand" href="#top">
+    <span class="brand-mark" aria-hidden="true">🪔</span>
+    <span class="brand-text"><b>Akanksha Padol</b><small>Nashik Tourist Guide</small></span>
+  </a>
+  <div class="links">
+    <a href="#about">About</a><a href="#kumbh">Kumbh 2027</a><a href="#tours">Tours</a><a href="#book">Book</a><a href="#records">Records</a><a href="#feedback">Feedback</a>
+  </div>
+  <a class="btn btn-sm" data-call href="#book">📞 Call</a>
 </nav></header>
 
+<main id="top">
 <div class="hero">
-  <h1>Experience Nashik Darshan</h1>
-  <p>Temples on the Godavari, ancient caves and vineyards, explained by a local guide who knows every lane and legend.</p>
-  <a class="btn" href="#book">Book your slot</a>
+  <div class="hero-inner">
+    <span class="eyebrow">Simhastha Kumbh Mela · 2027–28</span>
+    <h1>Experience <em>Nashik Darshan</em></h1>
+    <p class="deva" lang="mr">नाशिक दर्शन</p>
+    <p class="lead">Temples on the Godavari, ancient caves and vineyards, explained by a local guide who knows every lane and legend.</p>
+    <div class="cta">
+      <a class="btn btn-light" href="#book">Book your slot</a>
+      <a class="btn btn-ghost" data-call href="#book">📞 <span data-phone>Call me</span></a>
+    </div>
+    <ul class="trust">
+      <li>Marathi · Hindi · English</li>
+      <li>Groups of 1 to 15</li>
+      <li>Kumbh-ready plans</li>
+    </ul>
+  </div>
 </div>
 
 <section id="about">
   <h2>About your guide</h2>
   <p class="sub">Miss Akanksha Padol, Nashik tourist guide</p>
-  <div class="card">
+  <div class="card about">
     <p>Hello! I'm Akanksha, a Nashik-based guide who helps visitors explore the holy city's history, faith and food. Whether you are here for a pilgrimage, a family trip or the Kumbh Mela 2027, I plan the route, handle timings and share the stories behind each place.</p>
-    <p><b>Languages:</b> Marathi, Hindi, English &nbsp;·&nbsp; <b>Experience:</b> <span id="yrs">X</span> years &nbsp;·&nbsp; <b>Group size:</b> 1 to 15</p>
+    <p class="facts"><span><b>Languages</b>Marathi, Hindi, English</span><span><b>Experience</b><span id="yrs">X</span> years</span><span><b>Group size</b>1 to 15</span></p>
+  </div>
+</section>
+
+<section id="kumbh" class="band">
+  <div class="band-inner">
+    <h2 id="kumbhTitle">Simhastha Kumbh Mela 2027–28</h2>
+    <p class="sub">Nashik–Trimbakeshwar · the festival that returns to the Godavari once in twelve years</p>
+    <div class="kumbh-grid">
+      <div class="countdown">
+        <div class="cd-num" id="cdDays">–</div>
+        <div class="cd-label" id="cdLabel">days to the next Amrit Snan</div>
+      </div>
+      <ol class="timeline" id="kumbhTimeline"></ol>
+    </div>
+    <p class="fine" id="kumbhMeta"></p>
+    <div class="grid tips" id="kumbhTips"></div>
+    <p class="fine">Dates are as announced by the Maharashtra government. Please confirm with the official Kumbh authority before you travel.</p>
   </div>
 </section>
 
@@ -40,8 +83,8 @@
   <div class="card">
     <form id="bookForm">
       <div class="row">
-        <label>Your name<input name="name" required></label>
-        <label>Phone / WhatsApp<input name="phone" type="tel" required pattern="[0-9+ ]{10,15}"></label>
+        <label>Your name<input name="name" required autocomplete="name"></label>
+        <label>Phone / WhatsApp<input name="phone" type="tel" required pattern="[0-9+ ]{10,15}" autocomplete="tel"></label>
       </div>
       <div class="row">
         <label>Tour plan<select name="tour" id="tourSelect" required></select></label>
@@ -54,7 +97,7 @@
       </div>
       <label>Special requests (optional)<textarea name="notes" rows="2"></textarea></label>
       <button class="btn" type="submit">Request booking</button>
-      <div class="msg" id="bookMsg"></div>
+      <div class="msg" id="bookMsg" role="status"></div>
     </form>
   </div>
 </section>
@@ -83,17 +126,25 @@
         <div><div class="field-title">Rating</div><div class="stars" id="stars"></div></div>
         <label>Your experience<textarea name="text" rows="3" required></textarea></label>
         <button class="btn" type="submit">Submit feedback</button>
-        <div class="msg" id="fbMsg">Thank you for your feedback!</div>
+        <div class="msg" id="fbMsg" role="status">Thank you for your feedback!</div>
       </form>
     </div>
     <div class="card"><h3>What guests say</h3><div id="reviews"></div></div>
   </div>
 </section>
+</main>
 
 <footer>
-  <p>📞 +91 00000 00000 &nbsp;·&nbsp; ✉️ akanksha@example.com &nbsp;·&nbsp; Nashik, Maharashtra</p>
-  <p>© <span id="y"></span> Akanksha Padol. Nashik Darshan guide.</p>
+  <p class="foot-brand">🪔 Akanksha Padol</p>
+  <p class="foot-links">
+    <a data-call href="#book">📞 <span data-phone>Call me</span></a>
+    <a data-mail href="#book">✉️ <span data-email>Email</span></a>
+    <span>📍 Nashik, Maharashtra</span>
+  </p>
+  <p class="fine">© <span id="y"></span> Akanksha Padol · Nashik Darshan &amp; Kumbh Mela guide</p>
 </footer>
+
+<a class="fab" data-wa target="_blank" rel="noopener" aria-label="Chat on WhatsApp" href="#book">💬 <span>WhatsApp</span></a>
 
 <script src="js/data.js"></script>
 <script src="js/app.js"></script>
