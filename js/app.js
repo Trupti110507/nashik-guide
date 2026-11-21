@@ -1,7 +1,6 @@
 /* App logic. Data comes from data.js (loaded first). */
 
 const $ = s => document.querySelector(s);
-const $$ = s => [...document.querySelectorAll(s)];
 const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
 /* Storage: bookings and reviews are kept in this browser only.
@@ -12,57 +11,15 @@ const store = {
   set: (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch { /* storage blocked */ } }
 };
 
-/* ---- Contact details (phone, WhatsApp, email) ---- */
-const telHref = "tel:" + GUIDE.phone.replace(/[^\d+]/g, "");
-const waBase = `https://wa.me/${encodeURIComponent(GUIDE.whatsapp)}`;
-$$("[data-phone]").forEach(el => { el.textContent = GUIDE.phone; });
-$$("[data-email]").forEach(el => { el.textContent = GUIDE.email; });
-$$("[data-call]").forEach(a => { a.href = telHref; });
-$$("[data-mail]").forEach(a => { a.href = "mailto:" + GUIDE.email; });
-$$("[data-wa]").forEach(a => {
-  a.href = `${waBase}?text=${encodeURIComponent("Hello Akanksha, I'd like to know more about your Nashik tours.")}`;
-});
-
 $("#yrs").textContent = GUIDE.years;
 $("#y").textContent = new Date().getFullYear();
 
-/* ---- Kumbh Mela section ---- */
-const fmt = (d, o) => d.toLocaleDateString("en-IN", o);
-const startOfToday = new Date(); startOfToday.setHours(0, 0, 0, 0);
-const snans = KUMBH.snans.map(s => ({ ...s, d: new Date(s.date + "T00:00:00") }));
-
-$("#kumbhTitle").textContent = KUMBH.title;
-$("#kumbhMeta").textContent = KUMBH.meta;
-$("#kumbhTimeline").innerHTML = snans.map(s => `
-  <li><div class="t-date"><b>${s.d.getDate()}</b><small>${esc(fmt(s.d, { month: "short" }))} ${s.d.getFullYear()}</small></div>
-  <div><div class="t-title">${esc(s.title)}</div><div class="t-note">${esc(fmt(s.d, { weekday: "long" }))} · ${esc(s.note)}</div></div></li>`).join("");
-$("#kumbhTips").innerHTML = KUMBH.tips.map(t =>
-  `<div class="tip"><div class="ic" aria-hidden="true">${t.icon}</div><h3>${esc(t.title)}</h3><p>${esc(t.text)}</p></div>`).join("");
-
-const next = snans.find(s => s.d >= startOfToday);
-if (next) {
-  const days = Math.round((next.d - startOfToday) / 86400000);
-  $("#cdDays").textContent = days;
-  $("#cdLabel").textContent = days === 0 ? `${next.title} is today` : `${days === 1 ? "day" : "days"} to the ${next.title}`;
-} else {
-  $("#cdDays").textContent = "✓";
-  $("#cdLabel").textContent = "The main Amrit Snan dates have passed";
-}
-
 /* ---- Tours ---- */
 $("#tourGrid").innerHTML = TOURS.map(t => `
-  <div class="card tour"><span class="tag">${esc(t.tag)}</span><h3>${esc(t.name)}</h3>
+  <div class="card"><span class="tag">${esc(t.tag)}</span><h3>${esc(t.name)}</h3>
   <ol class="stops">${t.stops.map(s => `<li>${esc(s)}</li>`).join("")}</ol>
-  <div class="foot"><span class="price">${esc(t.price)}</span>
-  <button type="button" class="btn btn-sm" data-tour="${esc(t.name)}">Book this plan</button></div></div>`).join("");
+  <div class="price">${esc(t.price)}</div></div>`).join("");
 $("#tourSelect").innerHTML = TOURS.map(t => `<option>${esc(t.name)}</option>`).join("");
-
-$("#tourGrid").addEventListener("click", e => {
-  const b = e.target.closest("[data-tour]");
-  if (!b) return;
-  $("#tourSelect").value = b.dataset.tour;
-  $("#book").scrollIntoView({ behavior: "smooth" });
-});
 
 /* ---- Slot booking ---- */
 let chosen = null;
@@ -102,7 +59,7 @@ $("#bookForm").addEventListener("submit", e => {
   store.set("bookings", [...bookings(), b]);
   const text = `Hello Akanksha, I'd like to book:\nPlan: ${b.tour}\nDate: ${b.date}, ${b.slot}\nGuests: ${b.guests}\nName: ${b.name}, Phone: ${b.phone}\n${b.notes ? "Notes: " + b.notes : ""}`;
   msg.className = "msg";
-  msg.innerHTML = `Request saved! <a target="_blank" rel="noopener" href="${waBase}?text=${encodeURIComponent(text)}">Confirm on WhatsApp</a>`;
+  msg.innerHTML = `Request saved! <a target="_blank" rel="noopener" href="https://wa.me/${encodeURIComponent(GUIDE.whatsapp)}?text=${encodeURIComponent(text)}">Confirm on WhatsApp</a>`;
   e.target.reset();
   chosen = null;
   renderSlots();
